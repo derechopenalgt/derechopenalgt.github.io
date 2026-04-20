@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gestor de Gastos — Tarjetas</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f2; color: #1a1a18; min-height: 100vh; }
+.container { max-width: 860px; margin: 0 auto; padding: 1.5rem 1rem; }
+h1 { font-size: 20px; font-weight: 600; margin-bottom: 1.5rem; color: #1a1a18; }
+.nav { display: flex; gap: 6px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.nav-btn { padding: 7px 15px; border: 1px solid #d3d1c7; border-radius: 8px; background: transparent; color: #5f5e5a; cursor: pointer; font-size: 13px; transition: all 0.15s; }
+.nav-btn:hover { background: #ebebeb; }
+.nav-btn.active { background: #fff; color: #1a1a18; border-color: #888780; font-weight: 500; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+.section { display: none; }
+.section.active { display: block; }
+.cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 1.5rem; }
+.card-summary { background: #fff; border: 1px solid #e0dfd8; border-radius: 12px; padding: 1rem 1.25rem; }
+.card-name { font-size: 12px; color: #888780; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.03em; }
+.card-used { font-size: 24px; font-weight: 600; color: #1a1a18; }
+.card-limit { font-size: 12px; color: #888780; margin-top: 2px; }
+.progress-bar { height: 5px; background: #ebebeb; border-radius: 3px; margin-top: 10px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 3px; transition: width 0.4s; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 1rem; align-items: flex-end; }
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field label { font-size: 12px; color: #888780; font-weight: 500; }
+.field input, .field select { padding: 8px 10px; border: 1px solid #d3d1c7; border-radius: 8px; background: #fff; color: #1a1a18; font-size: 13px; min-width: 120px; outline: none; transition: border-color 0.15s; }
+.field input:focus, .field select:focus { border-color: #3266ad; }
+.btn { padding: 8px 16px; border: 1px solid #d3d1c7; border-radius: 8px; background: #fff; color: #1a1a18; cursor: pointer; font-size: 13px; font-weight: 500; transition: all 0.15s; white-space: nowrap; }
+.btn:hover { background: #f5f5f2; }
+.btn-primary { background: #1a1a18; color: #fff; border-color: #1a1a18; }
+.btn-primary:hover { background: #333; }
+.btn-danger { color: #a32d2d; border-color: #f7c1c1; }
+.btn-danger:hover { background: #fcebeb; }
+.section-title { font-size: 15px; font-weight: 600; color: #1a1a18; margin-bottom: 1rem; }
+.table-wrap { border: 1px solid #e0dfd8; border-radius: 12px; overflow: hidden; background: #fff; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+thead { background: #f5f5f2; }
+th { padding: 10px 14px; text-align: left; font-weight: 500; color: #888780; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; }
+td { padding: 10px 14px; border-top: 1px solid #f0efe8; color: #1a1a18; }
+tr:hover td { background: #fafaf8; }
+.badge { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 11px; font-weight: 500; }
+.badge-blue { background: #e6f1fb; color: #0c447c; }
+.badge-green { background: #eaf3de; color: #3b6d11; }
+.empty { text-align: center; padding: 2.5rem; color: #888780; font-size: 13px; }
+.filter-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1rem; align-items: flex-end; }
+.summary-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 1.5rem; }
+.metric { background: #fff; border: 1px solid #e0dfd8; border-radius: 10px; padding: 0.9rem 1rem; }
+.metric-label { font-size: 11px; color: #888780; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 500; }
+.metric-val { font-size: 22px; font-weight: 600; color: #1a1a18; }
+.chart-wrap { border: 1px solid #e0dfd8; border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem; background: #fff; }
+.chart-label { font-size: 13px; font-weight: 500; color: #888780; margin-bottom: 12px; }
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.35); z-index: 200; align-items: center; justify-content: center; }
+.modal-overlay.open { display: flex; }
+.modal { background: #fff; border: 1px solid #e0dfd8; border-radius: 14px; padding: 1.5rem; width: 320px; max-width: 90vw; box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
+.modal-title { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+.modal-desc { font-size: 13px; color: #888780; margin-bottom: 1.25rem; }
+.modal-btns { display: flex; gap: 8px; justify-content: flex-end; }
+@media (max-width: 600px) {
+  .container { padding: 1rem 0.75rem; }
+  .cards-grid { grid-template-columns: 1fr 1fr; }
+  .field input, .field select { min-width: 90px; }
+  th:nth-child(2), td:nth-child(2) { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>💳 Gestor de Gastos</h1>
+  <div class="nav">
+    <button class="nav-btn active" onclick="showSection('resumen', this)">Resumen</button>
+    <button class="nav-btn" onclick="showSection('gastos', this)">Gastos</button>
+    <button class="nav-btn" onclick="showSection('tarjetas', this)">Tarjetas</button>
+    <button class="nav-btn" onclick="showSection('historial', this)">Historial</button>
+    <button class="nav-btn" onclick="showSection('graficas', this)">Gráficas</button>
+  </div>
+  <div id="sec-resumen" class="section active">
+    <div class="filter-row">
+      <div class="field"><label>Mes</label><select id="r-mes" onchange="renderResumen()"></select></div>
+      <div class="field"><label>Año</label><select id="r-anio" onchange="renderResumen()"></select></div>
+    </div>
+    <div id="cards-overview" class="cards-grid"></div>
+    <div class="summary-metrics" id="summary-metrics"></div>
+    <div class="chart-wrap">
+      <div class="chart-label">Gastos por tarjeta este mes</div>
+      <div style="position:relative;height:200px;"><canvas id="chart-resumen"></canvas></div>
+    </div>
+  </div>
+  <div id="sec-gastos" class="section">
+    <p class="section-title">Registrar gasto</p>
+    <div class="row">
+      <div class="field"><label>Tarjeta</label><select id="g-tarjeta"></select></div>
+      <div class="field"><label>Fecha</label><input type="date" id="g-fecha"></div>
+      <div class="field"><label>Descripción</label><input type="text" id="g-desc" placeholder="Ej: Supermercado" style="min-width:160px;"></div>
+      <div class="field"><label>Monto (Q)</label><input type="number" id="g-monto" placeholder="0.00" min="0" step="0.01" style="min-width:100px;"></div>
+      <div class="field"><label>Categoría</label>
+        <select id="g-cat">
+          <option>Alimentación</option><option>Transporte</option><option>Servicios</option>
+          <option>Entretenimiento</option><option>Salud</option><option>Ropa</option><option>Otros</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" onclick="addGasto()">+ Agregar</button>
+    </div>
+    <p class="section-title">Gastos recientes</p>
+    <div class="table-wrap">
+      <table id="tabla-recientes">
+        <thead><tr><th>Tarjeta</th><th>Fecha</th><th>Descripción</th><th>Categoría</th><th>Monto</th><th></th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+  <div id="sec-tarjetas" class="section">
+    <p class="section-title">Mis tarjetas</p>
+    <div id="lista-tarjetas"></div>
+    <hr style="border:none;border-top:1px solid #e0dfd8;margin:1.5rem 0;">
+    <p class="section-title">Editar nombre y límite</p>
+    <div id="edit-tarjetas"></div>
+  </div>
+  <div id="sec-historial" class="section">
+    <p class="section-title">Historial completo</p>
+    <div class="filter-row">
+      <div class="field"><label>Tarjeta</label><select id="h-tarjeta" onchange="renderHistorial()"><option value="">Todas</option></select></div>
+      <div class="field"><label>Mes</label><select id="h-mes" onchange="renderHistorial()"><option value="">Todos</option></select></div>
+      <div class="field"><label>Año</label><select id="h-anio" onchange="renderHistorial()"><option value="">Todos</option></select></div>
+      <div class="field"><label>Categoría</label>
+        <select id="h-cat" onchange="renderHistorial()">
+          <option value="">Todas</option><option>Alimentación</option><option>Transporte</option><option>Servicios</option>
+          <option>Entretenimiento</option><option>Salud</option><option>Ropa</option><option>Otros</option>
+        </select>
+      </div>
+      <button class="btn" onclick="exportCSV()">⬇ Exportar CSV</button>
+    </div>
+    <div id="historial-metrics" class="summary-metrics"></div>
+    <div class="table-wrap">
+      <table id="tabla-historial">
+        <thead><tr><th>Tarjeta</th><th>Fecha</th><th>Descripción</th><th>Categoría</th><th>Monto</th><th></th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+  <div id="sec-graficas" class="section">
+    <div class="filter-row">
+      <div class="field"><label>Año</label><select id="grf-anio" onchange="renderGraficas()"></select></div>
+    </div>
+    <div class="chart-wrap">
+      <div class="chart-label">Evolución mensual por tarjeta</div>
+      <div style="position:relative;height:260px;"><canvas id="chart-mensual"></canvas></div>
+    </div>
+    <div class="chart-wrap">
+      <div class="chart-label">Gastos por categoría (año)</div>
+      <div style="position:relative;height:240px;"><canvas id="chart-cats"></canvas></div>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="modal-del">
+  <div class="modal">
+    <p class="modal-title">¿Eliminar este gasto?</p>
+    <p class="modal-desc">Esta acción no se puede deshacer.</p>
+    <div class="modal-btns">
+      <button class="btn" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-danger" onclick="confirmDelete()">Eliminar</button>
+    </div>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const MESES=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+const CARD_COLORS=['#3266ad','#1d9e75','#ba7517','#d85a30'];
+const CAT_COLORS=['#3266ad','#1d9e75','#ba7517','#d85a30','#533ab7','#d4537e','#73726c'];
+let charts={},deleteId=null;
+function getData(){try{return JSON.parse(localStorage.getItem('gastos_gt')||'{}')}catch(e){return{}}}
+function saveData(d){localStorage.setItem('gastos_gt',JSON.stringify(d))}
+function initData(){let d=getData();if(!d.tarjetas)d.tarjetas=[{id:1,nombre:'Tarjeta 1',limite:5000},{id:2,nombre:'Tarjeta 2',limite:10000},{id:3,nombre:'Tarjeta 3',limite:8000}];if(!d.gastos)d.gastos=[];saveData(d);return d}
+function fmt(n){return'Q '+parseFloat(n).toLocaleString('es-GT',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function showSection(id,btn){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));document.getElementById('sec-'+id).classList.add('active');btn.classList.add('active');if(id==='resumen')renderResumen();if(id==='gastos')renderGastosRecientes();if(id==='tarjetas')renderTarjetas();if(id==='historial')renderHistorial();if(id==='graficas')renderGraficas()}
+function populateYears(){const d=getData(),now=new Date(),years=new Set([now.getFullYear(),now.getFullYear()-1]);d.gastos.forEach(g=>years.add(new Date(g.fecha+'T12:00:00').getFullYear()));const arr=Array.from(years).sort((a,b)=>b-a);['r-anio','h-anio','grf-anio'].forEach(id=>{const el=document.getElementById(id),cv=el.value;el.innerHTML=arr.map(y=>`<option value="${y}"${y==now.getFullYear()?' selected':''}>${y}</option>`).join('');if(cv)el.value=cv});const rm=document.getElementById('r-mes'),cv2=rm.value;rm.innerHTML=MESES.map((m,i)=>`<option value="${i+1}"${i+1==now.getMonth()+1?' selected':''}>${m}</option>`).join('');if(cv2)rm.value=cv2;const hm=document.getElementById('h-mes');if(!hm.querySelector('option[value=""]'))hm.innerHTML='<option value="">Todos</option>';MESES.forEach((m,i)=>{if(!hm.querySelector(`option[value="${i+1}"]`))hm.innerHTML+=`<option value="${i+1}">${m}</option>`})}
+function populateCards(){const d=getData();['g-tarjeta','h-tarjeta'].forEach(id=>{const el=document.getElementById(id),cv=el.value,hasAll=id==='h-tarjeta';el.innerHTML=(hasAll?'<option value="">Todas</option>':'')+d.tarjetas.map(c=>`<option value="${c.id}">${c.nombre}</option>`).join('');if(cv)el.value=cv})}
+function renderResumen(){populateYears();const d=getData(),mes=parseInt(document.getElementById('r-mes').value),anio=parseInt(document.getElementById('r-anio').value),gm=d.gastos.filter(g=>{const fd=new Date(g.fecha+'T12:00:00');return fd.getMonth()+1===mes&&fd.getFullYear()===anio});document.getElementById('cards-overview').innerHTML=d.tarjetas.map((c,i)=>{const used=gm.filter(g=>g.tarjeta==c.id).reduce((s,g)=>s+parseFloat(g.monto),0),pct=Math.min(100,(used/c.limite)*100),col=pct>80?'#e24b4a':pct>50?'#ba7517':'#1d9e75';return`<div class="card-summary"><div class="card-name">${c.nombre}</div><div class="card-used">${fmt(used)}</div><div class="card-limit">Límite: ${fmt(c.limite)}</div><div class="progress-bar"><div class="progress-fill" style="width:${pct}%;background:${col};"></div></div><div style="font-size:11px;color:#888780;margin-top:4px;">${pct.toFixed(1)}% utilizado · disponible ${fmt(c.limite-used)}</div></div>`}).join('');const tot=gm.reduce((s,g)=>s+parseFloat(g.monto),0);document.getElementById('summary-metrics').innerHTML=`<div class="metric"><div class="metric-label">Total del mes</div><div class="metric-val">${fmt(tot)}</div></div><div class="metric"><div class="metric-label">Transacciones</div><div class="metric-val">${gm.length}</div></div><div class="metric"><div class="metric-label">Promedio por gasto</div><div class="metric-val">${fmt(gm.length?tot/gm.length:0)}</div></div>`;if(charts['r'])charts['r'].destroy();charts['r']=new Chart(document.getElementById('chart-resumen').getContext('2d'),{type:'bar',data:{labels:d.tarjetas.map(c=>c.nombre),datasets:[{label:'Gastos',data:d.tarjetas.map(c=>gm.filter(g=>g.tarjeta==c.id).reduce((s,g)=>s+parseFloat(g.monto),0)),backgroundColor:CARD_COLORS,borderRadius:5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'Q'+v.toLocaleString()},grid:{color:'rgba(0,0,0,0.05)'}},x:{grid:{display:false}}}}})}
+function addGasto(){const d=getData(),tarjeta=document.getElementById('g-tarjeta').value,fecha=document.getElementById('g-fecha').value,desc=document.getElementById('g-desc').value.trim(),monto=parseFloat(document.getElementById('g-monto').value),cat=document.getElementById('g-cat').value;if(!tarjeta||!fecha||!desc||isNaN(monto)||monto<=0){alert('Completa todos los campos correctamente.');return}d.gastos.push({id:Date.now(),tarjeta:parseInt(tarjeta),fecha,desc,monto,cat});saveData(d);document.getElementById('g-desc').value='';document.getElementById('g-monto').value='';renderGastosRecientes();populateYears()}
+function renderGastosRecientes(){populateCards();const d=getData(),recent=[...d.gastos].sort((a,b)=>b.fecha.localeCompare(a.fecha)).slice(0,30),tbody=document.querySelector('#tabla-recientes tbody');if(!recent.length){tbody.innerHTML='<tr><td colspan="6" class="empty">Sin gastos registrados aún.</td></tr>';return}tbody.innerHTML=recent.map(g=>{const t=d.tarjetas.find(c=>c.id==g.tarjeta);return`<tr><td><span class="badge badge-blue">${t?t.nombre:'—'}</span></td><td>${g.fecha}</td><td>${g.desc}</td><td><span class="badge badge-green">${g.cat}</span></td><td style="font-weight:600;">${fmt(g.monto)}</td><td><button class="btn btn-danger" onclick="askDelete(${g.id})" style="padding:3px 8px;font-size:12px;">✕</button></td></tr>`}).join('');document.getElementById('g-fecha').value=new Date().toISOString().split('T')[0]}
+function renderTarjetas(){const d=getData();document.getElementById('lista-tarjetas').innerHTML=d.tarjetas.map((c,i)=>{const total=d.gastos.filter(g=>g.tarjeta==c.id).reduce((s,g)=>s+parseFloat(g.monto),0),n=d.gastos.filter(g=>g.tarjeta==c.id).length;return`<div style="background:#fff;border:1px solid #e0dfd8;border-radius:12px;padding:1rem;margin-bottom:8px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;"><div style="width:38px;height:38px;border-radius:50%;background:${CARD_COLORS[i]};display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:14px;flex-shrink:0;">${i+1}</div><div style="flex:1;min-width:120px;"><div style="font-weight:600;font-size:14px;">${c.nombre}</div><div style="font-size:12px;color:#888780;">Límite: ${fmt(c.limite)} · Total histórico: ${fmt(total)} · ${n} transacciones</div></div></div>`}).join('');document.getElementById('edit-tarjetas').innerHTML=d.tarjetas.map(c=>`<div class="row" style="margin-bottom:0.75rem;"><div class="field"><label>Nombre</label><input type="text" id="tn-${c.id}" value="${c.nombre}" style="min-width:110px;"></div><div class="field"><label>Límite (Q)</label><input type="number" id="tl-${c.id}" value="${c.limite}" min="0" style="min-width:110px;"></div><button class="btn btn-primary" onclick="saveTarjeta(${c.id})">Guardar</button></div>`).join('')}
+function saveTarjeta(id){const d=getData(),t=d.tarjetas.find(c=>c.id==id);if(!t)return;t.nombre=document.getElementById('tn-'+id).value.trim()||t.nombre;t.limite=parseFloat(document.getElementById('tl-'+id).value)||t.limite;saveData(d);renderTarjetas()}
+function renderHistorial(){populateCards();populateYears();const d=getData();let gastos=[...d.gastos];const tv=document.getElementById('h-tarjeta').value,mv=document.getElementById('h-mes').value,av=document.getElementById('h-anio').value,cv=document.getElementById('h-cat').value;if(tv)gastos=gastos.filter(g=>g.tarjeta==parseInt(tv));if(mv)gastos=gastos.filter(g=>new Date(g.fecha+'T12:00:00').getMonth()+1==parseInt(mv));if(av)gastos=gastos.filter(g=>new Date(g.fecha+'T12:00:00').getFullYear()==parseInt(av));if(cv)gastos=gastos.filter(g=>g.cat===cv);gastos.sort((a,b)=>b.fecha.localeCompare(a.fecha));const tot=gastos.reduce((s,g)=>s+parseFloat(g.monto),0);document.getElementById('historial-metrics').innerHTML=`<div class="metric"><div class="metric-label">Total filtrado</div><div class="metric-val">${fmt(tot)}</div></div><div class="metric"><div class="metric-label">Transacciones</div><div class="metric-val">${gastos.length}</div></div>`;const tbody=document.querySelector('#tabla-historial tbody');if(!gastos.length){tbody.innerHTML='<tr><td colspan="6" class="empty">No hay gastos con estos filtros.</td></tr>';return}tbody.innerHTML=gastos.map(g=>{const t=d.tarjetas.find(c=>c.id==g.tarjeta);return`<tr><td><span class="badge badge-blue">${t?t.nombre:'—'}</span></td><td>${g.fecha}</td><td>${g.desc}</td><td><span class="badge badge-green">${g.cat}</span></td><td style="font-weight:600;">${fmt(g.monto)}</td><td><button class="btn btn-danger" onclick="askDelete(${g.id})" style="padding:3px 8px;font-size:12px;">✕</button></td></tr>`}).join('')}
+function renderGraficas(){populateYears();const d=getData(),anio=parseInt(document.getElementById('grf-anio').value),gy=d.gastos.filter(g=>new Date(g.fecha+'T12:00:00').getFullYear()===anio);if(charts['m'])charts['m'].destroy();charts['m']=new Chart(document.getElementById('chart-mensual').getContext('2d'),{type:'line',data:{labels:MESES.map(m=>m.slice(0,3)),datasets:d.tarjetas.map((c,i)=>({label:c.nombre,data:MESES.map((_,mi)=>gy.filter(g=>g.tarjeta==c.id&&new Date(g.fecha+'T12:00:00').getMonth()===mi).reduce((s,g)=>s+parseFloat(g.monto),0)),borderColor:CARD_COLORS[i],backgroundColor:CARD_COLORS[i]+'22',tension:0.3,fill:false,pointRadius:4}))},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{boxWidth:10,font:{size:11}}}},scales:{y:{ticks:{callback:v=>'Q'+v.toLocaleString()},grid:{color:'rgba(0,0,0,0.05)'}},x:{grid:{display:false},ticks:{autoSkip:false}}}}});const cats=['Alimentación','Transporte','Servicios','Entretenimiento','Salud','Ropa','Otros'];if(charts['c'])charts['c'].destroy();charts['c']=new Chart(document.getElementById('chart-cats').getContext('2d'),{type:'doughnut',data:{labels:cats,datasets:[{data:cats.map(cat=>gy.filter(g=>g.cat===cat).reduce((s,g)=>s+parseFloat(g.monto),0)),backgroundColor:CAT_COLORS,borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{boxWidth:10,font:{size:11}}}}}})}
+function askDelete(id){deleteId=id;document.getElementById('modal-del').classList.add('open')}
+function closeModal(){document.getElementById('modal-del').classList.remove('open');deleteId=null}
+function confirmDelete(){if(!deleteId)return;const d=getData();d.gastos=d.gastos.filter(g=>g.id!==deleteId);saveData(d);closeModal();renderGastosRecientes();renderHistorial();renderResumen()}
+function exportCSV(){const d=getData();let gastos=[...d.gastos];const tv=document.getElementById('h-tarjeta').value,mv=document.getElementById('h-mes').value,av=document.getElementById('h-anio').value,cv=document.getElementById('h-cat').value;if(tv)gastos=gastos.filter(g=>g.tarjeta==parseInt(tv));if(mv)gastos=gastos.filter(g=>new Date(g.fecha+'T12:00:00').getMonth()+1==parseInt(mv));if(av)gastos=gastos.filter(g=>new Date(g.fecha+'T12:00:00').getFullYear()==parseInt(av));if(cv)gastos=gastos.filter(g=>g.cat===cv);gastos.sort((a,b)=>b.fecha.localeCompare(a.fecha));const rows=gastos.map(g=>{const t=d.tarjetas.find(c=>c.id==g.tarjeta);return`"${t?t.nombre:''}","${g.fecha}","${g.desc}","${g.cat}",${g.monto}`});const blob=new Blob(['Tarjeta,Fecha,Descripcion,Categoria,Monto\n'+rows.join('\n')],{type:'text/csv;charset=utf-8;'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='gastos.csv';a.click()}
+initData();populateYears();populateCards();renderGastosRecientes();renderResumen();
+</script>
+</body>
+</html>
