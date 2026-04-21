@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Constitución de Guatemala – Parte Dogmática</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue-50: #E6F1FB; --blue-100: #B5D4F4; --blue-600: #185FA5; --blue-800: #0C447C; --blue-900: #042C53;
+      --teal-50: #E1F5EE; --teal-600: #0F6E56; --teal-800: #085041;
+      --purple-50: #EEEDFE; --purple-600: #534AB7; --purple-800: #3C3489;
+      --amber-50: #FAEEDA; --amber-600: #854F0B; --amber-800: #633806;
+      --coral-50: #FAECE7; --coral-600: #993C1D; --coral-800: #712B13;
+      --pink-50: #FBEAF0; --pink-600: #993556; --pink-800: #72243E;
+      --green-50: #EAF3DE; --green-600: #3B6D11; --green-800: #27500A;
+      --gray-50: #F1EFE8; --gray-100: #D3D1C7; --gray-200: #B4B2A9; --gray-600: #5F5E5A; --gray-800: #444441;
+      --bg: #ffffff; --bg-secondary: #F7F6F2; --bg-tertiary: #F1EFE8;
+      --text: #1a1a18; --text-secondary: #5F5E5A; --text-hint: #888780;
+      --border: rgba(0,0,0,0.12); --border-med: rgba(0,0,0,0.22);
+      --radius: 10px; --radius-lg: 14px;
+      --font: 'Segoe UI', system-ui, sans-serif;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1a1a18; --bg-secondary: #222220; --bg-tertiary: #2c2c2a;
+        --text: #f0ede8; --text-secondary: #B4B2A9; --text-hint: #888780;
+        --border: rgba(255,255,255,0.1); --border-med: rgba(255,255,255,0.2);
+        --blue-50: #0C2840; --blue-600: #378ADD; --blue-800: #85B7EB;
+        --teal-50: #04201a; --teal-600: #5DCAA5; --teal-800: #9FE1CB;
+        --purple-50: #1a1530; --purple-600: #AFA9EC; --purple-800: #CECBF6;
+        --amber-50: #2a1a04; --amber-600: #EF9F27; --amber-800: #FAC775;
+        --coral-50: #2a0e06; --coral-600: #F0997B; --coral-800: #F5C4B3;
+        --pink-50: #250a14; --pink-600: #ED93B1; --pink-800: #F4C0D1;
+        --green-50: #0d1e04; --green-600: #97C459; --green-800: #C0DD97;
+        --gray-50: #222220; --gray-100: #2c2c2a; --gray-600: #888780; --gray-800: #B4B2A9;
+      }
+    }
+
+    body { font-family: var(--font); background: var(--bg-tertiary); color: var(--text); min-height: 100vh; }
+
+    .app-wrap { max-width: 860px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+
+    .app-card { background: var(--bg); border-radius: var(--radius-lg); border: 0.5px solid var(--border); overflow: hidden; box-shadow: 0 2px 16px rgba(0,0,0,0.07); }
+
+    .app-header {
+      background: linear-gradient(135deg, var(--blue-900) 0%, var(--blue-800) 55%, var(--blue-600) 100%);
+      padding: 1.75rem 1.5rem 1.25rem;
+      color: white;
+      position: relative;
+    }
+    .flag-bar { display: flex; height: 5px; }
+    .flag-bar .sky { flex: 1; background: #4997D0; }
+    .flag-bar .white { flex: 1; background: #FFFFFF; }
+    .app-header h1 { font-size: 20px; font-weight: 600; color: white; margin-bottom: 4px; }
+    .app-header p { font-size: 13px; color: rgba(255,255,255,0.72); }
+    .app-header .badge { display:inline-block; margin-top:8px; background: rgba(255,255,255,0.15); border:0.5px solid rgba(255,255,255,0.3); border-radius:20px; font-size:11px; padding:3px 10px; color:rgba(255,255,255,0.85); }
+
+    .search-bar { padding: 1rem 1.25rem 0.5rem; border-bottom: 0.5px solid var(--border); background: var(--bg); }
+    .search-bar input {
+      width: 100%; padding: 9px 14px;
+      border: 0.5px solid var(--border-med);
+      border-radius: var(--radius);
+      font-size: 14px; font-family: var(--font);
+      background: var(--bg-secondary); color: var(--text);
+    }
+    .search-bar input:focus { outline: none; border-color: var(--blue-600); box-shadow: 0 0 0 3px rgba(24,95,165,0.12); }
+
+    .filter-bar { display:flex; gap:6px; flex-wrap:wrap; padding:0.65rem 1.25rem; border-bottom:0.5px solid var(--border); background:var(--bg); }
+    .filter-btn {
+      padding: 4px 11px; border-radius: 20px; font-size: 12px;
+      border: 0.5px solid var(--border-med);
+      background: var(--bg-secondary); color: var(--text-secondary);
+      cursor: pointer; font-family: var(--font); transition: all 0.15s;
+    }
+    .filter-btn.active { background: var(--blue-600); color: white; border-color: var(--blue-600); }
+    .filter-btn:hover:not(.active) { border-color: var(--blue-600); color: var(--blue-600); }
+
+    .results-bar { font-size: 12px; color: var(--text-hint); padding: 5px 1.25rem; background: var(--bg-secondary); border-bottom: 0.5px solid var(--border); }
+
+    .articles-list { max-height: 440px; overflow-y: auto; background: var(--bg); }
+    .articles-list::-webkit-scrollbar { width: 5px; }
+    .articles-list::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 3px; }
+
+    .article-item { border-bottom: 0.5px solid var(--border); padding: 0.7rem 1.25rem; cursor: pointer; transition: background 0.1s; }
+    .article-item:hover { background: var(--bg-secondary); }
+    .article-item.selected { background: var(--blue-50); border-left: 3px solid var(--blue-600); padding-left: calc(1.25rem - 2.5px); }
+
+    .art-header { display:flex; align-items:center; gap:7px; flex-wrap:wrap; margin-bottom:4px; }
+    .art-num { font-size:11px; font-weight:500; background:var(--blue-50); color:var(--blue-800); padding:2px 8px; border-radius:20px; white-space:nowrap; }
+    .art-title { font-size:14px; font-weight:500; color:var(--text); }
+    .art-cat { font-size:11px; padding:2px 8px; border-radius:20px; white-space:nowrap; }
+    .art-preview { font-size:12px; color:var(--text-secondary); line-height:1.5; }
+
+    .cat-individual { background:var(--blue-50); color:var(--blue-800); }
+    .cat-social     { background:var(--teal-50); color:var(--teal-800); }
+    .cat-civil      { background:var(--purple-50); color:var(--purple-800); }
+    .cat-politico   { background:var(--amber-50); color:var(--amber-800); }
+    .cat-libertad   { background:var(--coral-50); color:var(--coral-800); }
+    .cat-cultura    { background:var(--pink-50); color:var(--pink-800); }
+
+    .detail-panel { display:none; border-top:0.5px solid var(--border); padding:1.25rem; background:var(--bg-secondary); }
+    .detail-panel.visible { display:block; }
+    .detail-num { font-size:12px; color:var(--blue-600); font-weight:500; margin-bottom:3px; }
+    .detail-title { font-size:17px; font-weight:600; color:var(--text); margin-bottom:0.6rem; }
+    .detail-text { font-size:14px; color:var(--text); line-height:1.75; background:var(--bg); border:0.5px solid var(--border); border-radius:var(--radius); padding:1rem; margin:0.75rem 0; }
+    .detail-note { font-size:12.5px; color:var(--text-secondary); font-style:italic; border-left:2.5px solid var(--blue-600); padding-left:10px; line-height:1.6; }
+    .no-results { padding:2.5rem; text-align:center; color:var(--text-hint); font-size:14px; }
+    mark { background:#FFF3CD; border-radius:2px; padding:0 1px; }
+
+    footer { text-align:center; font-size:12px; color:var(--text-hint); margin-top:1.5rem; }
+    footer a { color:var(--blue-600); text-decoration:none; }
+  </style>
+</head>
+<body>
+<div class="app-wrap">
+  <div class="app-card">
+
+    <div class="app-header">
+      <div class="flag-bar"><div class="sky"></div><div class="white"></div><div class="sky"></div></div>
+      <div style="height:10px"></div>
+      <h1>Constitución Política de Guatemala</h1>
+      <p>Parte Dogmática — Derechos Humanos Fundamentales</p>
+      <span class="badge">Artículos 1 – 139 · CPRG 1985</span>
+    </div>
+
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Buscar artículo, derecho, palabra clave..." oninput="filterArticles()">
+    </div>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="setFilter('todos',this)">Todos</button>
+      <button class="filter-btn" onclick="setFilter('individual',this)">Derechos individuales</button>
+      <button class="filter-btn" onclick="setFilter('social',this)">Derechos sociales</button>
+      <button class="filter-btn" onclick="setFilter('civil',this)">Derechos civiles</button>
+      <button class="filter-btn" onclick="setFilter('politico',this)">Derechos políticos</button>
+      <button class="filter-btn" onclick="setFilter('libertad',this)">Libertades</button>
+      <button class="filter-btn" onclick="setFilter('cultura',this)">Cultural/Cívico</button>
+    </div>
+
+    <div class="results-bar" id="resultsCount">Cargando artículos...</div>
+    <div class="articles-list" id="articlesList"></div>
+    <div class="detail-panel" id="detailPanel">
+      <div class="detail-num" id="detailNum"></div>
+      <div class="detail-title" id="detailTitle"></div>
+      <span class="art-cat" id="detailCat" style="display:inline-block;margin-bottom:.6rem;font-size:12px;padding:3px 10px;border-radius:20px;font-weight:500;"></span>
+      <div class="detail-text" id="detailText"></div>
+      <div class="detail-note" id="detailNote"></div>
+    </div>
+
+  </div>
+  <footer>
+    Consulta académica · Constitución Política de la República de Guatemala, 1985 ·
+    <a href="https://github.com" target="_blank">GitHub</a>
+  </footer>
+</div>
+
+<script>
+const articles = [
+  {num:"Art. 1",title:"Protección a la persona",cat:"individual",text:"El Estado de Guatemala se organiza para proteger a la persona y a la familia; su fin supremo es la realización del bien común.",note:"Base fundamental del constitucionalismo guatemalteco. Define el fin último del Estado."},
+  {num:"Art. 2",title:"Deberes del Estado",cat:"individual",text:"Es deber del Estado garantizarle a los habitantes de la República la vida, la libertad, la justicia, la seguridad, la paz y el desarrollo integral de la persona.",note:"Establece los valores supremos que el Estado debe garantizar."},
+  {num:"Art. 3",title:"Derecho a la vida",cat:"individual",text:"El Estado garantiza y protege la vida humana desde su concepción, así como la integridad y la seguridad de la persona.",note:"Protección desde la concepción. Debatido en contextos de despenalización."},
+  {num:"Art. 4",title:"Libertad e igualdad",cat:"individual",text:"En Guatemala todos los seres humanos son libres e iguales en dignidad y derechos. El hombre y la mujer, cualquiera que sea su estado civil, tienen iguales oportunidades y responsabilidades.",note:"Principio de igualdad material y formal. Incluye igualdad de género."},
+  {num:"Art. 5",title:"Libertad de acción",cat:"libertad",text:"Toda persona tiene derecho a hacer lo que la ley no prohíbe; no está obligada a acatar órdenes que no estén basadas en ley y emitidas conforme a ella.",note:"Principio de legalidad aplicado a los ciudadanos: lo que no está prohibido está permitido."},
+  {num:"Art. 6",title:"Detención legal",cat:"civil",text:"Ninguna persona puede ser detenida o presa, sino por causa de delito o falta y en virtud de orden librada con apego a la ley por autoridad judicial competente.",note:"Garantía fundamental del due process. Base del habeas corpus."},
+  {num:"Art. 7",title:"Notificación de la causa de detención",cat:"civil",text:"Toda persona detenida deberá ser notificada inmediatamente, en forma verbal y por escrito, de la causa que motivó su detención.",note:"Derecho fundamental en el proceso penal. Ligado al Art. 6."},
+  {num:"Art. 8",title:"Derechos del detenido",cat:"civil",text:"Todo detenido deberá ser informado inmediatamente de sus derechos en forma que le sean comprensibles, especialmente que puede proveerse de un defensor.",note:"Origen constitucional del derecho a defensa técnica. Importantísimo en el OJ."},
+  {num:"Art. 9",title:"Interrogatorio a detenidos o presos",cat:"civil",text:"Las autoridades judiciales son las únicas competentes para interrogar a los detenidos o presos. Esta diligencia se hará dentro del plazo y en la forma que la ley establece.",note:"Exclusividad judicial en los interrogatorios. Prohíbe tortura e interrogatorios ilegales."},
+  {num:"Art. 10",title:"Centro de detención legal",cat:"civil",text:"Las personas aprehendidas por la autoridad no podrán ser conducidas a lugares de detención, arresto o prisión diferentes a los que están legal y públicamente destinados a ese objeto.",note:"Prohíbe los centros clandestinos de detención."},
+  {num:"Art. 11",title:"Detención por faltas o infracciones",cat:"civil",text:"Por faltas o por infracciones a los reglamentos no deben permanecer detenidas las personas cuya identidad pueda establecerse mediante documentación.",note:"Proporcionalidad en faltas menores: no se puede detener si la identidad es verificable."},
+  {num:"Art. 12",title:"Derecho de defensa",cat:"civil",text:"La defensa de la persona y sus derechos son inviolables. Nadie podrá ser condenado, ni privado de sus derechos, sin haber sido citado, oído y vencido en proceso legal ante juez o tribunal competente.",note:"Quizás el artículo más invocado en el OJ. Consagra el due process completo."},
+  {num:"Art. 13",title:"Motivos para auto de prisión",cat:"civil",text:"No podrá dictarse auto de prisión, sin que preceda información de haberse cometido un delito y sin que concurran motivos racionales suficientes para creer que la persona detenida lo ha cometido.",note:"Requisito de indicios racionales para el auto de prisión preventiva."},
+  {num:"Art. 14",title:"Presunción de inocencia y publicidad del proceso",cat:"civil",text:"Toda persona es inocente, mientras no se le haya declarado responsable judicialmente, en sentencia debidamente ejecutoriada.",note:"La presunción de inocencia: pilar fundamental del derecho penal moderno."},
+  {num:"Art. 15",title:"Irretroactividad de la ley",cat:"civil",text:"La ley no tiene efecto retroactivo, salvo en materia penal cuando favorezca al reo.",note:"La excepción es clave: retroactividad benigna en materia penal es obligatoria."},
+  {num:"Art. 16",title:"Declaración contra sí y parientes",cat:"civil",text:"En proceso penal, ninguna persona puede ser obligada a declarar contra sí misma, contra su cónyuge o persona unida de hecho legalmente, ni contra sus parientes dentro de los grados de ley.",note:"Derecho a no autoincriminarse. Base del silencio procesal."},
+  {num:"Art. 17",title:"No hay delito ni pena sin ley anterior",cat:"civil",text:"No son punibles las acciones u omisiones que no estén calificadas como delito o falta y penadas por ley anterior a su perpetración.",note:"Principio de legalidad penal: nullum crimen, nulla poena sine lege."},
+  {num:"Art. 18",title:"Pena de muerte",cat:"civil",text:"La pena de muerte no podrá imponerse en los siguientes casos: Con fundamento en presunciones; A las mujeres; A los mayores de sesenta años; A los reos de delitos políticos comunes.",note:"Guatemala mantiene la pena de muerte pero con restricciones constitucionales."},
+  {num:"Art. 19",title:"Sistema penitenciario",cat:"social",text:"El sistema penitenciario debe tender a la readaptación social y a la reeducación de los reclusos y cumplir en el tratamiento de los mismos, con las siguientes normas mínimas.",note:"Función rehabilitadora de la pena. Mucho debate sobre si se cumple en GT."},
+  {num:"Art. 20",title:"Menores de edad",cat:"social",text:"Los menores de edad que transgredieran las leyes no serán juzgados por los tribunales ordinarios ni se les aplicarán las penas establecidas para los adultos.",note:"Base constitucional de la justicia penal juvenil y la Ley PINA."},
+  {num:"Art. 21",title:"Sanciones a funcionarios",cat:"civil",text:"Los funcionarios que ordenaren o ejecutaren acciones que impliquen persecución, vejámenes, coacciones, o cualquier forma de hostigamiento o maltrato contra las personas, serán personalmente responsables.",note:"Responsabilidad personal de funcionarios. Aplica a fuerzas de seguridad."},
+  {num:"Art. 22",title:"Antejuicio",cat:"politico",text:"Los dignatarios y funcionarios públicos a quienes la ley otorgue fuero especial, no podrán ser detenidos ni sometidos a procedimiento penal alguno sin que el órgano político correspondiente declare que ha lugar a formación de causa.",note:"Institución del antejuicio: controversial y debatida en casos de corrupción."},
+  {num:"Art. 23",title:"Inviolabilidad de la vivienda",cat:"libertad",text:"La vivienda es inviolable. Nadie podrá penetrar en morada ajena sin permiso de quien la habita, salvo por orden escrita de juez competente en la que se especifique el inmueble a registrar.",note:"Base constitucional para la validez de los allanamientos judiciales."},
+  {num:"Art. 24",title:"Inviolabilidad de correspondencia, documentos y libros",cat:"libertad",text:"La correspondencia de toda persona, sus documentos y libros son inviolables. Sólo podrán revisarse o incautarse, en virtud de resolución firme dictada por juez competente.",note:"Incluye en la práctica las comunicaciones electrónicas contemporáneas."},
+  {num:"Art. 25",title:"Registro de personas y vehículos",cat:"libertad",text:"El registro de las personas y de los vehículos, sólo podrá efectuarse por elementos de las fuerzas de seguridad cuando se establezca causa justificada para ello.",note:"Controles de identidad y cacheos: deben tener causa justificada."},
+  {num:"Art. 26",title:"Libertad de locomoción",cat:"libertad",text:"Toda persona tiene libertad de entrar, permanecer, transitar y salir del territorio nacional y cambiar de domicilio o residencia, sin más limitaciones que las establecidas por la ley.",note:"El derecho a circular libremente dentro y fuera del país."},
+  {num:"Art. 27",title:"Derecho de asilo",cat:"libertad",text:"Guatemala reconoce el derecho de asilo y lo otorga de acuerdo con las prácticas internacionales. La extradición se rige por lo dispuesto en tratados internacionales.",note:"Derecho de asilo: reconocido. La extradición es regulada por tratados."},
+  {num:"Art. 28",title:"Derecho de petición",cat:"civil",text:"Los habitantes de la República de Guatemala tienen derecho a dirigir, individual o colectivamente, peticiones a la autoridad, la que está obligada a tramitarlas y deberá resolverlas.",note:"Derecho de petición: toda autoridad tiene obligación de responder."},
+  {num:"Art. 29",title:"Libre acceso a tribunales y dependencias del Estado",cat:"civil",text:"Toda persona tiene libre acceso a los tribunales, dependencias y oficinas del Estado, para ejercer sus acciones y hacer valer sus derechos de conformidad con la ley.",note:"Acceso a la justicia sin discriminación. Principio de tutela judicial efectiva."},
+  {num:"Art. 30",title:"Publicidad de los actos administrativos",cat:"civil",text:"Todos los actos de la administración son públicos. Los interesados tienen derecho a obtener, en cualquier tiempo, informes, copias, reproducciones y certificaciones que soliciten.",note:"Base del principio de transparencia y acceso a la información pública."},
+  {num:"Art. 31",title:"Acceso a archivos y registros estatales",cat:"civil",text:"Toda persona tiene el derecho de conocer lo que de ella conste en archivos, fichas o cualquier otra forma de registros estatales, y la finalidad a que se destina esta información.",note:"Derecho al habeas data. Protección de datos personales en archivos del Estado."},
+  {num:"Art. 32",title:"Objeto de las notificaciones",cat:"civil",text:"No es obligatoria la aceptación de distinciones honoríficas. El funcionario o empleado público que amenace o coaccione a cualquier persona para obligarla a pertenecer a determinado partido político será sancionado.",note:"Libertad de afiliación política. Prohíbe coacciones en la función pública."},
+  {num:"Art. 33",title:"Derecho de reunión y manifestación",cat:"politico",text:"Se reconoce el derecho de reunión pacífica y sin armas. Los derechos de reunión y de manifestación pública no pueden ser restringidos, disminuidos o coartados.",note:"Las manifestaciones públicas son un derecho constitucional protegido."},
+  {num:"Art. 34",title:"Derecho de asociación",cat:"politico",text:"Se reconoce el derecho de libre asociación. Nadie está obligado a asociarse ni a formar parte de grupos o asociaciones de autodefensa o similares.",note:"Libertad de asociación: incluye sindicatos, partidos, gremios, ONG."},
+  {num:"Art. 35",title:"Libertad de emisión del pensamiento",cat:"libertad",text:"Es libre la emisión del pensamiento por cualesquiera medios de difusión, sin censura ni licencia previa. Este derecho constitucional no podrá ser restringido por ley o disposición gubernamental alguna.",note:"Libertad de prensa sin censura previa. Base del periodismo libre en GT."},
+  {num:"Art. 36",title:"Libertad de religión",cat:"libertad",text:"El ejercicio de todas las religiones es libre. Toda persona tiene derecho a practicar su religión o creencia, tanto en público como en privado.",note:"Guatemala es un Estado laico con plena libertad religiosa."},
+  {num:"Art. 37",title:"Personalidad jurídica de las iglesias",cat:"cultura",text:"Se reconoce la personalidad jurídica de la Iglesia Católica. Las demás iglesias, cultos, entidades y asociaciones de carácter religioso obtendrán el reconocimiento de su personalidad jurídica conforme a la ley.",note:"La Iglesia Católica tiene reconocimiento especial en la Constitución guatemalteca."},
+  {num:"Art. 38",title:"Tenencia y portación de armas",cat:"individual",text:"Se reconoce el derecho de tenencia de armas de uso personal, no prohibidas por la ley, en el lugar de habitación. No habrá obligación de entregarlas.",note:"Derecho a la tenencia domiciliaria de armas, regulada por el Decreto 15-2009."},
+  {num:"Art. 39",title:"Propiedad privada",cat:"individual",text:"Se garantiza la propiedad privada como derecho inherente a la persona humana. Toda persona puede disponer libremente de sus bienes de acuerdo con la ley.",note:"Derecho de propiedad con función social. Base del derecho civil patrimonial."},
+  {num:"Art. 40",title:"Expropiación",cat:"individual",text:"En casos concretos, la propiedad privada podrá ser expropiada por razones de utilidad colectiva, beneficio social o interés público debidamente comprobadas. La expropiación deberá sujetarse a los procedimientos señalados por la ley, y el bien afectado se justipreciará por expertos.",note:"La expropiación requiere justa indemnización y resolución judicial."},
+  {num:"Art. 41",title:"Protección al derecho de propiedad",cat:"individual",text:"Por causa de actividad o delito político no puede limitarse el derecho de propiedad en forma alguna. Se prohíbe la confiscación de bienes.",note:"Prohíbe la confiscación. Importante distinción con el decomiso penal."},
+  {num:"Art. 42",title:"Derecho de autor o inventor",cat:"individual",text:"Se garantiza el derecho de autor y el derecho de inventor; los titulares de los mismos gozarán de la propiedad exclusiva de su obra o invento.",note:"Protección constitucional de la propiedad intelectual."},
+  {num:"Art. 43",title:"Libertad de industria, comercio y trabajo",cat:"individual",text:"Se reconoce la libertad de industria, de comercio y de trabajo, salvo las limitaciones que por motivos sociales o de interés nacional impongan las leyes.",note:"Libertad económica con límites de interés nacional. Base del derecho mercantil."},
+  {num:"Art. 44",title:"Derechos inherentes a la persona humana",cat:"individual",text:"Los derechos y garantías que otorga la Constitución no excluyen otros que, aunque no figuren expresamente en ella, son inherentes a la persona humana.",note:"Cláusula abierta de derechos: numerus apertus. Importantísima doctrinalmente."},
+  {num:"Art. 45",title:"Acción contra infractores y legitimidad de resistencia",cat:"individual",text:"La acción para enjuiciar a los infractores de los derechos humanos es pública. Puede ejercerse mediante simple denuncia, sin caución ni formalidad alguna.",note:"El derecho de resistencia: legítima cuando se ejercen acciones en defensa de derechos constitucionales."},
+  {num:"Art. 46",title:"Preeminencia del Derecho Internacional",cat:"individual",text:"Se establece el principio general de que en materia de derechos humanos, los tratados y convenciones aceptados y ratificados por Guatemala tienen preeminencia sobre el derecho interno.",note:"Bloque de constitucionalidad: los tratados de DDHH prevalecen sobre leyes ordinarias."},
+  {num:"Art. 47",title:"Protección a la familia",cat:"social",text:"El Estado garantiza la protección social, económica y jurídica de la familia. Promoverá su organización sobre la base legal del matrimonio, la igualdad de derechos de los cónyuges.",note:"Protección integral a la familia como base de la sociedad."},
+  {num:"Art. 48",title:"Unión de hecho",cat:"social",text:"El Estado reconoce la unión de hecho y la ley preceptuará todo lo relativo a la misma.",note:"La unión de hecho tiene reconocimiento constitucional en Guatemala."},
+  {num:"Art. 49",title:"Matrimonio",cat:"social",text:"El matrimonio podrá ser autorizado por los alcaldes, concejales que designen las corporaciones municipales, los notarios y los ministros de culto facultados por la autoridad administrativa correspondiente.",note:"El matrimonio puede ser civil o religioso, con efectos legales iguales."},
+  {num:"Art. 50",title:"Igualdad de los hijos",cat:"social",text:"Todos los hijos son iguales ante la ley y tienen los mismos derechos. Toda discriminación es punible.",note:"No hay distinción entre hijos legítimos e ilegítimos. Igualdad filial absoluta."},
+  {num:"Art. 51",title:"Protección a menores y ancianos",cat:"social",text:"El Estado protegerá la salud física, mental y moral de los menores de edad y de los ancianos. Les garantizará su derecho a la alimentación, salud, educación y seguridad y previsión social.",note:"Protección especial a poblaciones vulnerables: niñez y adultos mayores."},
+  {num:"Art. 52",title:"Maternidad",cat:"social",text:"La maternidad tiene la protección del Estado, el que velará en forma especial por el estricto cumplimiento de los derechos y obligaciones que de ella se deriven.",note:"Protección especial a la maternidad, incluyendo en el ámbito laboral."},
+  {num:"Art. 53",title:"Minusválidos",cat:"social",text:"El Estado garantiza la protección de los minusválidos y personas que adolecen de limitaciones físicas, psíquicas o sensoriales. Se declara de interés nacional su atención médico-social.",note:"Protección a personas con discapacidad. Terminología del texto original de 1985."},
+  {num:"Art. 54",title:"Adopción",cat:"social",text:"El Estado reconoce y protege la adopción. El adoptado adquiere la condición de hijo del adoptante. Se prohíbe la adopción por extranjeros de menores guatemaltecos, cuando haya guatemaltecos en condiciones de adoptarlos.",note:"La adopción fue objeto de reforma legislativa con el Decreto 77-2007."},
+  {num:"Art. 55",title:"Obligación de proporcionar alimentos",cat:"social",text:"Es punible la negativa a proporcionar alimentos en la forma que la ley prescribe.",note:"Base constitucional del delito de negación de asistencia económica (Código Penal, Art. 242)."},
+  {num:"Art. 56",title:"Acciones contra causas de desintegración familiar",cat:"social",text:"Declaranse de interés social, las acciones contra el alcoholismo, la drogadicción y otras causas de desintegración familiar. El Estado deberá tomar las medidas de prevención, tratamiento y rehabilitación adecuadas.",note:"La lucha contra adicciones es un mandato constitucional de interés social."},
+  {num:"Art. 57",title:"Derecho a la cultura",cat:"cultura",text:"Toda persona tiene derecho a participar libremente en la vida cultural y artística de la comunidad, así como a beneficiarse del progreso científico y tecnológico de la Nación.",note:"Derecho de acceso a la cultura. Base de las políticas culturales del Estado."},
+  {num:"Art. 58",title:"Identidad cultural",cat:"cultura",text:"Se reconoce el derecho de las personas y de las comunidades a su identidad cultural de acuerdo a sus valores, su lengua y sus costumbres.",note:"Reconocimiento de la pluriculturalidad guatemalteca. Relevante para pueblos indígenas."},
+  {num:"Art. 59",title:"Protección e investigación de la cultura",cat:"cultura",text:"Es obligación primordial del Estado proteger, fomentar y divulgar la cultura nacional; emitirá las leyes que sean necesarias para este propósito.",note:"Obligación activa del Estado en protección cultural."},
+  {num:"Art. 60",title:"Patrimonio cultural",cat:"cultura",text:"Forman el patrimonio cultural de la Nación los bienes y valores paleontológicos, arqueológicos, históricos y artísticos del país y están bajo la protección del Estado.",note:"Sitios mayas, coloniales y toda riqueza arqueológica son patrimonio protegido."},
+  {num:"Art. 61",title:"Protección al patrimonio cultural",cat:"cultura",text:"La protección, restauración, exportación, alteración o destrucción de monumentos y objetos arqueológicos es regulada por la ley.",note:"El saqueo arqueológico es delito; ver Decreto 26-97 Ley para la Protección del Patrimonio Cultural."},
+  {num:"Art. 62",title:"Protección a las ciencias y tecnología",cat:"cultura",text:"La expresión artística nacional, el arte popular, el folklore y las artesanías e industrias autóctonas, deben ser objeto de protección especial del Estado.",note:"Protección constitucional al arte popular, folklore y artesanías indígenas."},
+  {num:"Art. 63",title:"Derecho a la expresión creadora",cat:"cultura",text:"El Estado garantiza la libre expresión creadora, apoya y estimula al científico, al intelectual y al artista nacional, promoviendo su formación y superación profesional y económica.",note:"Estímulo estatal a la creación artística e intelectual."},
+  {num:"Art. 64",title:"Patrimonio natural",cat:"cultura",text:"Se declara de interés nacional la conservación, protección y mejoramiento del patrimonio natural de la Nación. El Estado fomentará la creación de parques nacionales, reservas y refugios naturales.",note:"Base constitucional del derecho ambiental guatemalteco."},
+  {num:"Art. 65",title:"Preservación y promoción de la cultura",cat:"cultura",text:"La actividad del Estado en cuanto a la preservación y promoción de la cultura y sus manifestaciones, estará a cargo de un organismo específico con presupuesto propio.",note:"Mandato de crear el ente cultural estatal — origen del Ministerio de Cultura."},
+  {num:"Art. 66",title:"Protección a grupos étnicos",cat:"social",text:"Guatemala está formada por diversos grupos étnicos entre los que figuran los grupos indígenas de ascendencia maya. El Estado reconoce, respeta y promueve sus formas de vida, costumbres, tradiciones.",note:"Reconocimiento de la plurietnicidad. Base de los derechos indígenas en GT."},
+  {num:"Art. 67",title:"Protección a las tierras y las cooperativas agrícolas indígenas",cat:"social",text:"Las tierras de las cooperativas, comunidades indígenas o cualesquiera otras formas de tenencia comunal o colectiva de propiedad agraria, así como el patrimonio familiar y vivienda popular, gozarán de protección especial del Estado.",note:"Protección especial a la propiedad comunal indígena."},
+  {num:"Art. 68",title:"Tierras para comunidades indígenas",cat:"social",text:"Mediante programas especiales y legislación adecuada, el Estado proveerá de tierras estatales a las comunidades indígenas que las necesiten para su desarrollo.",note:"Política agraria diferenciada para comunidades indígenas."},
+  {num:"Art. 69",title:"Traslación de trabajadores y su protección",cat:"social",text:"Las actividades laborales que impliquen traslación de trabajadores fuera de sus comunidades, serán objeto de protección y legislación que aseguren las condiciones adecuadas de salud, seguridad y previsión social.",note:"Protección a trabajadores migrantes internos (aplica mucho en corte de caña y café)."},
+  {num:"Art. 70",title:"Ley específica",cat:"social",text:"Una ley regulará lo relativo a las materias de esta sección.",note:"Remisión al Acuerdo de Identidad y Derechos de los Pueblos Indígenas de 1995."},
+  {num:"Art. 71",title:"Derecho a la educación",cat:"social",text:"Se garantiza la libertad de enseñanza y de criterio docente. Es obligación del Estado proporcionar y facilitar educación a sus habitantes sin discriminación alguna.",note:"La educación es un derecho y una obligación estatal fundamental."},
+  {num:"Art. 72",title:"Fines de la educación",cat:"social",text:"La educación tiene como fin primordial el desarrollo integral de la persona humana, el conocimiento de la realidad y cultura nacional y universal.",note:"Educación integral: no solo instrucción, sino formación humana completa."},
+  {num:"Art. 73",title:"Libertad de educación y asistencia económica estatal",cat:"social",text:"La familia es fuente y fundamento de la educación. El Estado es responsable de la educación inicial, preprimaria, primaria y básica.",note:"Obliga al Estado a garantizar educación básica obligatoria y gratuita."},
+  {num:"Art. 74",title:"Educación obligatoria",cat:"social",text:"Los habitantes tienen el derecho y la obligación de recibir la educación inicial, preprimaria, primaria y básica, dentro de los límites de edad que fije la ley.",note:"Educación básica es derecho y obligación hasta el nivel básico."},
+  {num:"Art. 75",title:"Alfabetización",cat:"social",text:"La alfabetización se declara de urgencia nacional y es obligación social contribuir a ella. El Estado debe organizarla y promoverla con todos los recursos necesarios.",note:"GT tiene alta tasa de analfabetismo históricamente; este mandato sigue vigente."},
+  {num:"Art. 76",title:"Sistema educativo y enseñanza bilingüe",cat:"social",text:"La administración del sistema educativo deberá ser descentralizada. En las escuelas establecidas en zonas de predominante población indígena deberá impartirse preferentemente en forma bilingüe.",note:"Educación bilingüe intercultural: un reto enorme aún por cumplir."},
+  {num:"Art. 77",title:"Obligaciones de los propietarios de empresas",cat:"social",text:"Los propietarios de las empresas industriales, agrícolas, pecuarias y comerciales están obligados a establecer y mantener, de acuerdo con la ley, escuelas, guarderías y centros culturales.",note:"Obligación patronal de apoyo educativo. Ligada al Código de Trabajo."},
+  {num:"Art. 78",title:"Magisterio",cat:"social",text:"El Estado reconoce y garantiza la dignidad del magisterio y su constante superación profesional.",note:"Protección constitucional a los maestros. Los conflictos MINEDUC-STEG tienen base aquí."},
+  {num:"Art. 79",title:"Enseñanza agropecuaria",cat:"social",text:"Se declara de interés nacional el estudio, aprendizaje, explotación, comercialización e industrialización agropecuaria. Se crea como entidad descentralizada, autónoma, con personalidad jurídica y patrimonio propio.",note:"Origen constitucional del INTECAP y la enseñanza técnica agropecuaria."},
+  {num:"Art. 80",title:"Promoción de la ciencia y la tecnología",cat:"social",text:"El Estado reconoce y promueve la ciencia y la tecnología como bases fundamentales del desarrollo nacional.",note:"Mandato de promover investigación científica y tecnológica nacional."},
+  {num:"Art. 81",title:"Títulos y diplomas",cat:"social",text:"Los títulos y diplomas cuya expedición corresponda al Estado, tienen plena validez legal. Los derechos adquiridos por el ejercicio de las profesiones acreditadas por dichos títulos, deben ser respetados.",note:"Protección a los títulos profesionales universitarios emitidos por el Estado."},
+  {num:"Art. 82",title:"Autonomía de la Universidad de San Carlos de Guatemala",cat:"social",text:"La Universidad de San Carlos de Guatemala, es la única universidad estatal. Le corresponde con exclusividad dirigir, organizar y desarrollar la educación superior del Estado y la educación estatal.",note:"La USAC es autónoma por mandato constitucional. ¡Tu alma mater tiene rango constitucional!"},
+  {num:"Art. 83",title:"Gobierno de la Universidad de San Carlos",cat:"social",text:"El gobierno de la Universidad de San Carlos de Guatemala corresponde a su Consejo Superior Universitario, integrado por los rectores, decanos de las facultades.",note:"Cogobierno universitario: estudiantes participan en el gobierno de la USAC."},
+  {num:"Art. 84",title:"Asignación presupuestaria para la USAC",cat:"social",text:"La Universidad de San Carlos de Guatemala recibirá una asignación privativa no menor del cinco por ciento del Presupuesto General de Ingresos Ordinarios del Estado.",note:"El 5% constitucional para la USAC: muy debatido si se cumple íntegramente."},
+  {num:"Art. 85",title:"Universidades privadas",cat:"social",text:"Las universidades privadas funcionarán como instituciones independientes y les corresponde organizarse en la forma que dispongan sus estatutos.",note:"Las privadas son independientes pero sujetas al control de la USAC en habilitación de títulos."},
+  {num:"Art. 86",title:"Consejo de la Enseñanza Privada Superior",cat:"social",text:"Se crea el Consejo de la Enseñanza Privada Superior, cuya integración y funciones se establecerán por ley, con el objeto de velar porque se mantenga el nivel académico en dichas universidades.",note:"El CEPS supervisa las universidades privadas en GT."},
+  {num:"Art. 87",title:"Reconocimiento de grados y títulos",cat:"social",text:"Sólo serán reconocidos en Guatemala los títulos universitarios y las incorporaciones de profesionales egresados de universidades extranjeras, en la forma que establezca la ley.",note:"La incorporación de títulos extranjeros pasa obligatoriamente por la USAC."},
+  {num:"Art. 88",title:"Exenciones y deducciones de impuestos",cat:"social",text:"Las universidades están exentas del pago de toda clase de impuestos, arbitrios y contribuciones, sin excepción alguna.",note:"Exención tributaria total para universidades (pública y privadas)."},
+  {num:"Art. 89",title:"Sueldo de los universitarios",cat:"social",text:"Los profesionales egresados de la Universidad de San Carlos de Guatemala, o de los centros de enseñanza privados que funcionen legalmente, tendrán igualdad de oportunidades para ejercer su profesión.",note:"Igualdad entre egresados de USAC y universidades privadas en el ejercicio profesional."},
+  {num:"Art. 90",title:"Colegiación profesional",cat:"social",text:"La colegiación de los profesionales universitarios es obligatoria y tendrá por fines la superación moral, científica, técnica y material de las profesiones universitarias y el control de su ejercicio.",note:"Los colegios profesionales (abogados, médicos, etc.) son de membresía obligatoria en GT."},
+  {num:"Art. 91",title:"Asignación presupuestaria para el deporte",cat:"social",text:"Es obligación del Estado el fomento y la promoción de la educación física y el deporte. Para ese efecto, se destinará una asignación privativa no menor del tres por ciento del Presupuesto General de Ingresos Ordinarios del Estado.",note:"3% constitucional para el deporte: CDAG, CONFEDE y CODESUR lo administran."},
+  {num:"Art. 92",title:"Autonomía del deporte",cat:"social",text:"Se reconoce y garantiza la autonomía del deporte federado a través de sus organismos rectores, conforme a la ley. Estos organismos están exentos del pago de impuestos y arbitrios.",note:"El deporte federado es autónomo y exento de impuestos."},
+  {num:"Art. 93",title:"Derecho a la salud",cat:"social",text:"El goce de la salud es derecho fundamental del ser humano, sin discriminación alguna.",note:"La salud como derecho fundamental. Base del MSPAS y del IGSS."},
+  {num:"Art. 94",title:"Obligación del Estado sobre salud y asistencia social",cat:"social",text:"El Estado velará por la salud y la asistencia social de todos los habitantes. Desarrollará, a través de sus instituciones, acciones de prevención, promoción, recuperación, rehabilitación.",note:"Mandato integral de salud pública: prevención, curación y rehabilitación."},
+  {num:"Art. 95",title:"La salud, bien público",cat:"social",text:"La salud de los habitantes de la Nación es un bien público. Todas las personas e instituciones están obligadas a velar por su conservación y restablecimiento.",note:"La salud trasciende lo individual: es un bien colectivo."},
+  {num:"Art. 96",title:"Control de calidad de productos",cat:"social",text:"El Estado controlará la calidad de los productos alimenticios, farmacéuticos, químicos y de todos aquellos que puedan afectar la salud y bienestar de los habitantes.",note:"Base constitucional del control sanitario y del MSPAS en regulación de medicamentos."},
+  {num:"Art. 97",title:"Medio ambiente y equilibrio ecológico",cat:"social",text:"El Estado, las municipalidades y los habitantes del territorio nacional están obligados a proporcionar el desarrollo social, económico y tecnológico que prevenga la contaminación del ambiente.",note:"Derecho humano al ambiente sano. Base del Ministerio de Ambiente y CONRED."},
+  {num:"Art. 98",title:"Participación de las comunidades en salud",cat:"social",text:"Las comunidades tienen el derecho y el deber de participar activamente en la planificación, ejecución y evaluación de los programas de salud.",note:"Participación comunitaria en salud: modelo de atención primaria."},
+  {num:"Art. 99",title:"Alimentación y nutrición",cat:"social",text:"El Estado velará porque la alimentación y nutrición de la población reúna los requisitos mínimos de salud. Las instituciones especializadas del Estado deberán coordinar sus acciones entre sí.",note:"Seguridad alimentaria y nutricional: mandato constitucional. Ley del SINASAN lo desarrolla."},
+  {num:"Art. 100",title:"Seguridad social",cat:"social",text:"El Estado reconoce y garantiza el derecho a la seguridad social para beneficio de los habitantes de la Nación. Su régimen se instituye como función pública, en forma nacional, unitaria y obligatoria.",note:"El IGSS tiene base constitucional. La afiliación es obligatoria para trabajadores formales."},
+  {num:"Art. 101",title:"Derecho al trabajo",cat:"social",text:"El trabajo es un derecho de la persona y una obligación social. El régimen laboral del país debe organizarse conforme a principios de justicia social.",note:"El trabajo como derecho y deber social. Base del Código de Trabajo (Decreto 1441)."},
+  {num:"Art. 102",title:"Derechos sociales mínimos de la legislación del trabajo",cat:"social",text:"Son derechos sociales mínimos que fundamentan la legislación del trabajo: derecho a la libre elección del trabajo, salario equitativo, igualdad de salario para igual trabajo, jornadas de trabajo reguladas, descanso semanal, vacaciones pagadas, indemnización y más.",note:"Lista exhaustiva de derechos laborales mínimos irrenunciables. 19 literales de derechos."},
+  {num:"Art. 103",title:"Tutelaridad de las leyes de trabajo",cat:"social",text:"Las leyes que regulan las relaciones entre empleadores y el trabajo son conciliatorias, tutelares para los trabajadores y atenderán a todos los factores económicos y sociales pertinentes.",note:"Principio in dubio pro operario: en caso de duda, se favorece al trabajador."},
+  {num:"Art. 104",title:"Derecho de huelga y paro",cat:"social",text:"Se reconoce el derecho de huelga y el de paro ejercidos de conformidad con la ley, después de agotados los procedimientos de conciliación y arbitraje.",note:"La huelga es un derecho constitucional. Los servicios esenciales tienen restricciones."},
+  {num:"Art. 105",title:"Vivienda de los trabajadores",cat:"social",text:"El Estado, en forma directa y por medio del IGSS, fomentará la construcción de viviendas populares mediante sistemas de financiamiento adecuados a fin de que el mayor número de familias guatemaltecas las disfruten en propiedad.",note:"Derecho a vivienda digna vinculado al trabajo. FOGUAVI y UDEVIPO son instrumentos de este mandato."},
+  {num:"Art. 106",title:"Irrenunciabilidad de los derechos laborales",cat:"social",text:"Los derechos consignados en esta sección son irrenunciables para los trabajadores, susceptibles de ser superados a través de la contratación individual o colectiva.",note:"Los derechos laborales no se pueden renunciar. Las mejoras sí son permitidas."},
+  {num:"Art. 107",title:"Trabajadores del Estado",cat:"social",text:"Los trabajadores del Estado están al servicio de la administración pública y nunca de partido político, grupo, organización o persona alguna.",note:"Principio de neutralidad política de los servidores públicos."},
+  {num:"Art. 108",title:"Régimen de los trabajadores del Estado",cat:"social",text:"Las relaciones del Estado y sus entidades descentralizadas o autónomas con sus trabajadores se rigen por la Ley de Servicio Civil.",note:"Ley de Servicio Civil (Decreto 1748) rige al trabajador público."},
+  {num:"Art. 109",title:"Trabajadores por planilla",cat:"social",text:"Los trabajadores del Estado que se desempeñen en actividades no comprendidas en la Ley de Servicio Civil, serán regidos por las normas del Código de Trabajo.",note:"Los planilleros del Estado tienen protección del Código de Trabajo."},
+  {num:"Art. 110",title:"Indemnización",cat:"social",text:"Los trabajadores del Estado tendrán derecho a su indemnización en los casos en que sean despedidos sin causa justificada.",note:"Indemnización laboral garantizada constitucionalmente para empleados del Estado."},
+  {num:"Art. 111",title:"Responsabilidad de funcionarios",cat:"social",text:"Los funcionarios y empleados públicos son responsables por las infracciones a la Constitución, leyes y reglamentos.",note:"Principio de responsabilidad del servidor público. Ligado a la Ley de Probidad."},
+  {num:"Art. 112",title:"No reelección de funcionarios administrativos",cat:"social",text:"Los funcionarios y empleados del Estado al cesar en el ejercicio de sus cargos, entregarán los bienes que les hayan sido confiados con inventario respectivo.",note:"Obligación de inventario al cese. Mecanismo de rendición de cuentas."},
+  {num:"Art. 113",title:"Derecho a optar a empleos o cargos públicos",cat:"social",text:"Los guatemaltecos tienen derecho a optar a empleos o cargos públicos y para su otorgamiento no se atenderá más que a razones fundadas en méritos de capacidad, idoneidad y honradez.",note:"Meritocracia en el servicio público. En la práctica, el clientelismo político lo desafía constantemente."},
+  {num:"Art. 114",title:"Revisión a los contratos y concesiones",cat:"social",text:"El Congreso de la República tiene facultad para revisar los contratos, concesiones o los que de cualquier otra forma hubiere comprometido el patrimonio del Estado.",note:"Control legislativo sobre contratos del Estado. Importante frente a corrupción."},
+  {num:"Art. 115",title:"Empresas calificadas como de utilidad pública",cat:"social",text:"Cuando se trate de empresas de transporte, comunicaciones u otras que la ley determine como de utilidad pública o que sus servicios o productos sean de primera necesidad.",note:"Regulación especial para servicios públicos esenciales."},
+  {num:"Art. 116",title:"Regulación de las huelgas para trabajadores del Estado",cat:"social",text:"Se prohíbe la huelga de los trabajadores del Estado. Cuando los trabajadores de las entidades autónomas o semiautónomas que atienden servicios esenciales incurran en huelga, el Estado garantizará el mantenimiento de dichos servicios.",note:"Los trabajadores del Estado no pueden hacer huelga. Siempre controvertido con los maestros."},
+  {num:"Art. 117",title:"Nacionalidad de los guatemaltecos",cat:"politico",text:"Son guatemaltecos de origen, los nacidos en el territorio de Guatemala, los hijos de padre o madre guatemaltecos, nacidos en el extranjero.",note:"Nacionalidad por ius soli y ius sanguinis. Guatemala combina ambos criterios."},
+  {num:"Art. 118",title:"Principios del régimen económico y social",cat:"social",text:"El régimen económico y social de Guatemala se funda en principios de justicia social. Es obligación del Estado orientar la economía nacional para lograr la utilización de los recursos naturales y el potencial humano.",note:"La economía guatemalteca debe orientarse a la justicia social: principio rector."},
+  {num:"Art. 119",title:"Obligaciones del Estado",cat:"social",text:"Son obligaciones fundamentales del Estado: promover el desarrollo económico, la descentralización, la conservación de recursos naturales, el pleno empleo y la mejora de las condiciones de vida.",note:"Lista de 17 obligaciones económicas del Estado hacia la ciudadanía."},
+  {num:"Art. 120",title:"Intervención del Estado",cat:"social",text:"El Estado podrá intervenir en las empresas que presten servicios públicos esenciales a la comunidad, cuando se paralicen sus actividades por conflicto laboral y se afecte la vida de la comunidad.",note:"Intervención estatal en servicios esenciales durante huelgas."},
+  {num:"Art. 121",title:"Bienes del Estado",cat:"social",text:"Son bienes del Estado: los de dominio público, las aguas de la zona marítima que ciñe las costas, los lagos, ríos navegables y sus riberas.",note:"El agua, playas y subsuelo son bienes estatales inalienables."},
+  {num:"Art. 122",title:"Reservas territoriales del Estado",cat:"social",text:"El Estado se reserva el dominio de una faja terrestre de tres kilómetros a lo largo de los océanos, contados desde la línea superior de las mareas.",note:"Franja costera de 3km es reserva del Estado. Relevante en desarrollo turístico."},
+  {num:"Art. 123",title:"Zona económica de Guatemala",cat:"social",text:"El Estado ejerce soberanía plena sobre el territorio nacional, integrado por su suelo, subsuelo, aguas interiores, el mar territorial en la extensión que fija la ley.",note:"Soberanía territorial y zona económica exclusiva (200 millas marinas)."},
+  {num:"Art. 124",title:"Enajenación de los bienes nacionales",cat:"social",text:"No pueden enajenarse los bienes mencionados en los incisos a) y b) del artículo 121, con excepción de los que fueren transferidos para servicios públicos.",note:"Los bienes de dominio público son inalienables e imprescriptibles."},
+  {num:"Art. 125",title:"Explotación de recursos naturales no renovables",cat:"social",text:"Se declara de utilidad y necesidad pública, la explotación técnica y racional de hidrocarburos, minerales y demás recursos naturales no renovables.",note:"Base constitucional de la minería y petróleo en GT. Muy debatido por comunidades indígenas."},
+  {num:"Art. 126",title:"Reforestación",cat:"social",text:"Se declara de urgencia nacional y de interés social, la reforestación del país y la conservación de los bosques.",note:"La deforestación en Guatemala viola mandatos constitucionales expresos."},
+  {num:"Art. 127",title:"Régimen de aguas",cat:"social",text:"Todas las aguas son bienes de dominio público, inalienables e imprescriptibles. Su aprovechamiento, uso y goce, se otorgan en la forma establecida por la ley.",note:"El agua es bien público. Fundamental en conflictos minero-comunitarios."},
+  {num:"Art. 128",title:"Aprovechamiento de aguas, lagos y ríos",cat:"social",text:"El aprovechamiento de las aguas de los lagos y de los ríos, para fines agrícolas, agropecuarios, turísticos o de cualquier otra naturaleza, corresponde al Estado o a particulares, de acuerdo con la ley.",note:"La concesión de aguas requiere autorización estatal."},
+  {num:"Art. 129",title:"Electrificación",cat:"social",text:"Se declara de urgencia nacional, la electrificación del país, con base en planes formulados por el Estado y las municipalidades, con la participación de la empresa privada.",note:"Electrificación rural: mandato constitucional. Base del INDE y la CNEE."},
+  {num:"Art. 130",title:"Prohibición de monopolios",cat:"social",text:"Se prohíben los monopolios y privilegios. El Estado limitará el funcionamiento de las empresas que absorban o tiendan a absorber, en perjuicio de la economía nacional, la producción en uno o más ramos industriales.",note:"Prohibición constitucional de monopolios. Base de la Ley de Competencia."},
+  {num:"Art. 131",title:"Servicios de transporte y comunicaciones",cat:"social",text:"Por su importancia económica en el desarrollo del país, los servicios de transporte comercial y de las comunicaciones, están sujetos en todos sus aspectos a las leyes y reglamentos específicos del Estado.",note:"Regulación estatal obligatoria de transporte y telecomunicaciones."},
+  {num:"Art. 132",title:"Moneda",cat:"social",text:"Es potestad exclusiva del Estado, emitir y regular la moneda, así como formular y realizar las políticas que tiendan a crear y mantener condiciones cambiarias y crediticias favorables al desarrollo ordenado de la economía nacional.",note:"El Quetzal y la política monetaria son potestad exclusiva del Estado. Base del Banguat."},
+  {num:"Art. 133",title:"Junta Monetaria",cat:"social",text:"La Junta Monetaria tendrá a su cargo la determinación de la política monetaria, cambiaria y crediticia del país y velará por la liquidez y solvencia del sistema bancario nacional.",note:"La Junta Monetaria es el máximo organismo de política económica. Integrada por sector público y privado."},
+  {num:"Art. 134",title:"Descentralización y autonomía",cat:"social",text:"El municipio y las entidades autónomas y descentralizadas, actúan por delegación del Estado. La autonomía de las mismas no las exime de la fiscalización estatal.",note:"Autonomía municipal con fiscalización. Base del IUSI y del fortalecimiento municipal."},
+  {num:"Art. 135",title:"Deberes y derechos cívicos",cat:"politico",text:"Son derechos y deberes de los guatemaltecos: servir y defender a la Patria, cumplir y velar porque se cumpla la Constitución, trabajar por el desarrollo cívico, cultural, moral, económico y social de los guatemaltecos.",note:"Derechos y deberes cívicos del ciudadano guatemalteco."},
+  {num:"Art. 136",title:"Deberes y derechos políticos",cat:"politico",text:"Son derechos y deberes de los ciudadanos: inscribirse en el Registro de Ciudadanos; elegir y ser electo; velar por la libertad y efectividad del sufragio; optar a cargos públicos.",note:"La ciudadanía plena incluye el derecho al voto, a ser electo y a integrar partidos políticos."},
+  {num:"Art. 137",title:"Derecho de petición en materia política",cat:"politico",text:"El derecho de petición en materia política, corresponde exclusivamente a los guatemaltecos. Las peticiones podrán hacerse individual o colectivamente.",note:"Solo guatemaltecos pueden peticionar en asuntos políticos. Los extranjeros están excluidos."},
+  {num:"Art. 138",title:"Limitación a los derechos constitucionales",cat:"individual",text:"Es obligación del Estado y de las autoridades, mantener a los habitantes de la Nación, en el pleno goce de los derechos que la Constitución garantiza. Ante poder público irresistible o Estado de Excepción, los derechos pueden ser limitados temporalmente.",note:"El Estado de Excepción permite suspender ciertos derechos. Regulado por el Decreto 7-70."},
+  {num:"Art. 139",title:"Ley de orden público y estados de excepción",cat:"individual",text:"Todo lo relativo a esta materia, se regula en la Ley Constitucional de Orden Público. En estado de prevención, no podrán cerrarse los medios de comunicación social.",note:"La Ley de Orden Público es la norma que regula los estados de excepción en detalle."}
+];
+
+const catLabels = {individual:'Individual',social:'Social',civil:'Civil/Penal',politico:'Político',libertad:'Libertad',cultura:'Cultural'};
+const catCss = {individual:'cat-individual',social:'cat-social',civil:'cat-civil',politico:'cat-politico',libertad:'cat-libertad',cultura:'cat-cultura'};
+
+let currentFilter = 'todos';
+let selectedIdx = null;
+
+function setFilter(f, el) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  filterArticles();
+}
+
+function filterArticles() {
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  const list = document.getElementById('articlesList');
+  const countEl = document.getElementById('resultsCount');
+
+  const filtered = articles.filter(a => {
+    const matchCat = currentFilter === 'todos' || a.cat === currentFilter;
+    const matchQ = !q || [a.title, a.text, a.num, a.note].some(s => s.toLowerCase().includes(q));
+    return matchCat && matchQ;
+  });
+
+  list.innerHTML = '';
+  if (!filtered.length) {
+    list.innerHTML = '<div class="no-results">No se encontraron artículos.</div>';
+    countEl.textContent = 'Sin resultados';
+    return;
+  }
+
+  countEl.textContent = `Mostrando ${filtered.length} de ${articles.length} artículos`;
+
+  filtered.forEach(a => {
+    const realIdx = articles.indexOf(a);
+    const div = document.createElement('div');
+    div.className = 'article-item' + (selectedIdx === realIdx ? ' selected' : '');
+    div.onclick = () => selectArticle(realIdx, div);
+
+    let preview = a.text.substring(0, 105) + '...';
+    if (q) {
+      const re = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi');
+      preview = preview.replace(re, '<mark>$1</mark>');
+    }
+
+    div.innerHTML = `
+      <div class="art-header">
+        <span class="art-num">${a.num}</span>
+        <span class="art-title">${a.title}</span>
+        <span class="art-cat ${catCss[a.cat]}">${catLabels[a.cat]}</span>
+      </div>
+      <div class="art-preview">${preview}</div>`;
+    list.appendChild(div);
+  });
+}
+
+function selectArticle(idx, el) {
+  document.querySelectorAll('.article-item').forEach(i => i.classList.remove('selected'));
+  if (el) el.classList.add('selected');
+  selectedIdx = idx;
+  const a = articles[idx];
+  const panel = document.getElementById('detailPanel');
+  document.getElementById('detailNum').textContent = a.num;
+  document.getElementById('detailTitle').textContent = a.title;
+  const badge = document.getElementById('detailCat');
+  badge.textContent = catLabels[a.cat];
+  badge.className = 'art-cat ' + catCss[a.cat];
+  badge.style.cssText = 'display:inline-block;margin-bottom:.6rem;font-size:12px;padding:3px 12px;border-radius:20px;font-weight:500;';
+  document.getElementById('detailText').textContent = a.text;
+  document.getElementById('detailNote').textContent = a.note;
+  panel.classList.add('visible');
+  panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+filterArticles();
+</script>
+</body>
+</html>
